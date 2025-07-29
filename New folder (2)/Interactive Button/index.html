@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Color Generator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      transition: background 0.5s ease;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 30px;
+      width: 90%;
+      max-width: 800px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .container h1 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .container small {
+      color: #666;
+    }
+
+    .colors {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .color-box {
+      width: 150px;
+      height: 150px;
+      border-radius: 15px;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      position: relative;
+      margin: 10px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 10px;
+      transition: background 0.5s ease;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.2);
+      border: none;
+      color: #fff;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #generateBtn {
+      margin-top: 30px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #000;
+      color: white;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #generateBtn:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Generate Colors On<br><small>Entering The Button</small></h1>
+
+    <div class="colors">
+      <div class="color-box" id="box1">
+        <button class="copy-btn" onclick="copyColor('code1')">COPY</button>
+        <span id="code1">#F1C40F</span>
+      </div>
+      <div class="color-box" id="box2">
+        <button class="copy-btn" onclick="copyColor('code2')">COPY</button>
+        <span id="code2">#3498DB</span>
+      </div>
+      <div class="color-box" id="box3">
+        <button class="copy-btn" onclick="copyColor('code3')">COPY</button>
+        <span id="code3">#9B59B6</span>
+      </div>
+    </div>
+
+    <button id="generateBtn" onclick="generateColors()">Generate Colors</button>
+  </div>
+
+  <script>
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function generateColors() {
+      const boxes = [1, 2, 3];
+      boxes.forEach(i => {
+        const color = getRandomColor();
+        document.getElementById(`box${i}`).style.backgroundColor = color;
+        document.getElementById(`code${i}`).textContent = color;
+      });
+
+      // Change background color of whole page
+      const bgColor = getRandomColor();
+      document.body.style.background = bgColor;
+    }
+
+    function copyColor(codeId) {
+      const text = document.getElementById(codeId).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert(`Copied ${text}`);
+      });
+    }
+  </script>
+</body>
+</html>
